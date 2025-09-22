@@ -11,6 +11,8 @@ The `pre-commit` phase is important because it can prevent security issues befor
 
 Git hooks are scripts that are self-executed before or after events like committing, pushing, or receiving. They are categorized into client-side and server-side hooks.
 
+![Pre Commit](/current-version/assets/images/git_hook_workflow.png)
+
 ### Server-Side Hooks
 
 Server-side hooks resides in server-side repositories (e.g., a central repository, or a developer’s public repository). When attached to the official repository, some of these can serve as a way to enforce policy by rejecting certain commits.
@@ -63,16 +65,9 @@ Several open-source [tool](#tools1) are attempting to simplify such managemnt an
 
 ## Usages
 
-One of the most useful hooks is the **pre-commit hook**, which, as the name implies, is run right before the commit actually happens, making it possible to automatically run checks on the proposed code (and potentially, reject the changes). Regardless of how many checks you want to run, there can only be one `.git/hooks/pre-commit` executable per repository, which can be a bit cumbersome, especially when you have multiple checks. This is where tools like `pre-commit` or `husky` really shine.
+DevSecOps objectives are to shift-left security and checks earlier in the process therefore increasing quality, reducing risk and improving time to resolution.  Although, we have to recognized that adding these requirement increase an already heavy mental load for the developpers whom are already joggling with several complexe topics.  Therefore automation and simplicity of usage is key.
 
-Making sure that there are no secrets in the code, and that the code follows certain guidelines (According to the Linter rules) will result in a higher quality code.
-
-In the following, we take a look into different types of pre-commit actions that are as follows:
-
-1. Secrets Management
-2. Linting Code
-
-**Pre-commit** is a git feature that can be leveraged as part of the **shift-left security** approach where the developers are empowered to view the issues in the source code earlier in the SDLC process. When the developer runs a git-commit command to commit the code into their local repository, **pre-commit hook** check can be integrated with a security scanning tool executed to look for code quality issues, hard-coded secrets, insecure code, vulnerable dependencies/opensource libraries, etc..
+<!-- **Pre-commit** is a git feature that can be leveraged as part of the **shift-left security** approach where the developers are empowered to view the issues in the source code earlier in the SDLC process.  When the developer runs a git-commit command to commit the code into their local repository, **pre-commit hook** check can be integrated with a security scanning tool executed to look for code quality issues, hard-coded secrets, insecure code, vulnerable dependencies/opensource libraries, etc..
 
 It is to be noted that pre-commit hooks are at the developer's local repository level and not the remote repository commonly used by all the developers working on the same project/application. In such cases when it's required to prevent security issues before they are submitted to a remote/central (Git) repository **pre-push hook** or **git-push** checks can be configured. Refer: <https://git-scm.com/docs/git-push>
 
@@ -80,39 +75,39 @@ Another alternative approach to scan the source code for security issues (such a
 
 The following image can give you a better view of what the pre-commit means and why we must consider it.
 
-```mermaid
----
-title: Git - Hooks Workflows
----
-%%{ init:
-        {  'logLevel': 'debug',
-            'theme': 'dark'
-        }
-}%%
+![Pre Commit](/current-version/assets/images/pre-commit.png)
 
-flowchart LR
+Regardless of how many checks you want to run, there can only be one `.git/hooks/pre-commit` executable per repository, which can be a bit cumbersome, especially when you have multiple checks. Several [tools](#tools1) have been creating to increase performance and ease of usage solving this chllenges. -->
 
-  subgraph code[Code]
-    direction LR
-     client-side --> server-side
+### Pre-Commit Hooks
 
-    subgraph client-side[Client Side hooks]
-        direction LR
-        gcl[Clone] --> gp[Pull] --> gb[ Branch] --> gcp[Checkout]
-        click gb "https://www.github.com" _blank
-    end
+One of the most useful hooks is the **pre-commit**, which, as the name implies, is run right before the commit actually happens.  Given this script are run automatically during the normal workflow used by the developper when a new change is commited to the codebase.  Therefore automatically running checks on the proposed code changes and verifying if it violate potentially quality or security at the last possible minute, after which reject the changes guiding the developper toward early resolutions.
 
-    subgraph server-side[Server Side hooks]
-        direction LR
-        new_code[New Code]
-        new_code -- Working Directory--> ga[Git Add] --Staging --> prepare-commit-msg[Prepare Commit]
-        gc[Git Commit] --> gpsh[Git Push]
-    end
+- Finding potential security risks
+- Catching formatting issues
+- Validating configurations
+- Running quick tests
+- Enforcing team standards
 
-  end
+### Commit-Msg Hooks
+
+Another fairly common and useful hooks is the **commit-msg**, which, as the name implies, is run right before the commit message actually happens.  Structuring a project Git commit messages can help amongst developpers to understand changes impact and Git history readability.  Internal project management tools might also leverage Git commit messages to track development items progress over time using keyword.
+
+Furthermore, various specification that standardizes the structure of Git commit messages exist, making them both human and machine-readable exist. This type of standardization enables the creation of an explicit commit history, which facilitates automated tools for tasks like changelog generation and semantic versioning.
+
+- Enforcing team standards
+
+## Considerations
+
+### Annoyances
+
+Pre-commit should be kept as an elective toolchain for the developpers to opt-in or kept to be extemely minimalistic.  Pre-commit hooks are capturing issues and problems early but by definition are slowing down the developper natural workflow which can be annoying for some.  This constant capture of new issues can create a significant impact on the developper continuously context switch between completing the task at hand and addressing security or code quality requirement.
+
+```bash
+alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign --message "--wip-- [skip ci]"'
 ```
 
-![Pre Commit](/current-version/assets/images/pre-commit.png)
+### CI Pipeline
 
 ---
 

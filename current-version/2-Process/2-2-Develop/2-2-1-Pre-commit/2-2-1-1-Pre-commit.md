@@ -109,6 +109,12 @@ alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commi
 
 ### CI Pipeline
 
+CI pipeline should follow the [Verification and validation](https://en.wikipedia.org/wiki/Verification_and_validation) quality assurance processes therefore all require checks rans via the `pre-commit hooks` should be ran in some shape or form during the integration phase.  Typically, some actions rans as `gi
+
+of the more advanced tool like secret scanner, sast, sca and others will have dedicated pre-configuration jobs|workflows
+
+Pre-commit should be kept as an elec
+
 ---
 
 ## Tools[^1]

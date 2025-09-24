@@ -99,9 +99,26 @@ Furthermore, various specification that standardizes the structure of Git commit
 
 ## Considerations
 
+### Improper installation
+
+The value factor using [pre-commit frameworks](#tools1) lives in the portability and distribution of common sets of rules which can be difficult using `native git hooks`.  Although upon initial project local configuration on the developper workstation, these frameworks might not be properly configure and depending on various factor the initial steps can easily be forgotten leading to some early contribution commits not following the agreed upon rulesets.  This can be mitigate with proper project on-boarding and various checklist validation during the code merging process.
+
+## Skipping
+
+Programming convention can generation conflictual and confrontational situation where not all team members agrees on some of them.  The usage of `pre-commit hooks` attempts to fosther a shift-left mindset where
+
+prior to moving downstream into the codebase.  Finding common ground can sometimes be problematic or time sensitive situation might required to commit out of spec code.
+
+Therefore it can be common for developpers to sovereignly decide to skip some or all pre-commit validation with appending the `git commit --no-verify` which natively will skip all installed hooks.  Depending on the severity of the rulesets being skipped some downstream processes might capture such omission  (i.e.: code review, CI pipeline, etc...).
+
+- In the event this oversight arose from the delibarate and well taugh out process of acquiring **technical debt** in order to increase velocity, the team leadership should constrait it using  **dediated configurations mechanism from the used framework** with some supervision to avoid overusage.
+- In the even this is due to a disgruntled team members, the team leadership should investigate these type of disagreement discussing, arguing and agreeing upon the desired porject rulesets.  Given the majority of [pre-commit frameworks](#tools1) use a declarative method, discontented contributors should suggest improvement in the form of a new contribution (which should not aim at totally eliminating this mechanism).  As always, it is the team leadership prerogative to impose coding standard upon its on project.
+
 ### Annoyances
 
 Pre-commit should be kept as an elective toolchain for the developpers to opt-in or kept to be extemely minimalistic.  Pre-commit hooks are capturing issues and problems early but by definition are slowing down the developper natural workflow which can be annoying for some.  This constant capture of new issues can create a significant impact on the developper continuously context switch between completing the task at hand and addressing security or code quality requirement.
+
+Advanced users might be inclinded to use a `terminal alias` similar to this exemple below.  The usage of such `gwip|git wip` can be beneficial to retain high level of focus while churning on code improvement reducing mental sway as long as prior to promoting the code from the local to the remote environment (such as using `git push`).  Advanced users should perform additional `git rebase` task to rework and squash these unvalidated `gwip|git wip` commits upon reaching the appropriated level of maturity.  This pattern can be very powerful yet easily lead to [skipping](#skipping).
 
 ```bash
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign --message "--wip-- [skip ci]"'
@@ -121,14 +138,14 @@ Pre-commit should be kept as an elec
 
 ### Open-source
 
-- [githooks](https://git-scm.com/docs/githooks) - Hooks used by Git
+- [CaptainHook](https://github.com/captainhook-git/captainhook) - Git hooks manager for PHP developers
+- [Git Build Hook Maven Plugin](https://github.com/rudikershaw/git-build-hook) - Install Git hooks and config during a Maven build
+- [Git Hooks](https://git-scm.com/docs/githooks) - Native hooks used by Git
 - [Husky](https://typicode.github.io/husky/) - Git hooks made easy 🐶 woof!
-- [lefthook](https://github.com/evilmartians/lefthook) - Fast and powerful Git hooks manager for any type of projects.
-- [Pre-Commit](https://pre-commit.com/) - A framework for managing and maintaining multi-language pre-commit hooks.
-- [simple-git-hooks](https://github.com/toplenboren/simple-git-hooks) - A simple git hooks manager for small projects
-- [CaptainHook](https://github.com/captainhook-git/captainhook) - Git hooks manager for PHP developers.
-- [Git Build Hook Maven Plugin](https://github.com/rudikershaw/git-build-hook) - Install Git hooks and config during a Maven build.
-- [Overcommit](https://github.com/sds/overcommit) - A fully configurable and extendable git hook manager.
+- [Lefthook](https://github.com/evilmartians/lefthook) - Fast and powerful Git hooks manager for any type of projects
+- [Overcommit](https://github.com/sds/overcommit) - A fully configurable and extendable git hook manager
+- [Pre-Commit](https://pre-commit.com/) - A framework for managing and maintaining multi-language pre-commit hooks
+- [Simple-git-hooks](https://github.com/toplenboren/simple-git-hooks) - A simple git hooks manager for small projects
 
 ### Links
 

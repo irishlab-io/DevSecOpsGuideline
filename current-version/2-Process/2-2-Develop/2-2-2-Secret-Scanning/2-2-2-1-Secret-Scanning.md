@@ -1,6 +1,38 @@
-# Take care secrets and credentials
+# Secret Scanning
 
-*How can you ensure that sensitive information are not pushed to a repository?*
+<!-- tldr; Don’t rely only on SAST for secrets. Use a dedicated scanner at minimum, and if compliance/visibility matter, consider something like GitGuardian or or Trufflehog enterprise
+
+I’ve been working in AppSec / secure software development for quite a while, and have had to set up secret scanning across different teams and stacks. Here’s how I’ve seen it play out in practice:
+
+1. SAST vs. dedicated secret scanning
+
+Even though some SAST tools advertise secret detection, they’re rarely as strong as dedicated tools. Secret scanning requires updated regexes, entropy checks, and context awareness — things SAST engines don’t focus on. In most setups, SAST is for code issues (injection, unsafe patterns, etc.), while secret scanning runs separately (pre-commit hooks, CI jobs, or continuous repo monitoring).
+
+2. GitGuardian vs. Trufflehog (enterprise)
+
+GitGuardian → polished SaaS, strong detection accuracy, dashboards, audit/compliance features, and easy integrations (Slack/Jira/SIEM). Great if you want visibility across the org.
+
+Trufflehog → very flexible, great for scanning histories and many backends (git, S3, GCP, etc.), but you’ll need to invest more engineering effort if you want compliance/reporting at scale.Some teams actually pair them: Trufflehog for deep historical sweeps, GitGuardian for ongoing monitoring.
+
+3. Alternatives
+
+Gitleaks (what you’re already using) → solid for CI/CD pipelines but is not as polished as GG or TH for paid versions.
+
+detect-secrets (Yelp) → good for pre-commit hooks, but not as actively maintained.
+
+ggshield (GitGuardian CLI) → gives you both local and pipeline scanning tied to their SaaS backend.
+
+Custom regex rules → handy for company-specific formats (internal API keys, JWTs, etc.).
+
+Typical workflow
+
+Pre-commit/pre-push: lightweight hooks (detect-secrets/gitleaks).
+
+CI/CD: thorough scans (gitleaks/trufflehog).
+
+Continuous monitoring: enterprise SaaS (GitGuardian). -->
+
+> How can you ensure that sensitive information are not pushed to a repository?
 
 This is one of the [OWASP Top Ten issues](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure) and
 several bug bounties write-ups are related to this kind of issue, eg hard-coded credentials pushed by mistake.

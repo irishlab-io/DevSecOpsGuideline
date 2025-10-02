@@ -39,6 +39,20 @@ For instance, we can switch from SAST/DAST to a regular test suite with built-in
 CI/CD is an advantage for SecOps, a privileged entry point for security measures and controls.
 However, when using CI/CD tools to provide automation, keep in mind that the tools themselves often expand your attack surface, so put security controls on building, deployment, and automation software.
 
+## Contribution
+
+### Code Standards
+
+This project uses the [pre-commit](https://pre-commit.com/) framework to validate linting and ensure code standards.  Please setup your environment properly or follow the various linting and formating rulesets.
+
+```bash
+pip install pre-commit # run once to install the tool
+pre-commit install --allow-missing-config && pre-commit autoupdate # run once to init your repo
+pre-commit run --all-files --color auto # run to execute pre-commit check ad-hoc
+```
+
+This project validate the coding standard with this [CI pipeline](.github/workflows/master.yml); preventing code merging if it fails.
+
 ---
 
 ## Table of Contents

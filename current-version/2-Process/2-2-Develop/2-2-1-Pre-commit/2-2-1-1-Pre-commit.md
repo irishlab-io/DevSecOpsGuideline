@@ -109,11 +109,13 @@ The project leadership should be included in all slippage and consider the funda
 
 ## CI Pipeline
 
-CI pipeline should follow the [Verification and validation](https://en.wikipedia.org/wiki/Verification_and_validation) quality assurance processes therefore all require checks rans via the `pre-commit hooks` should be ran in some shape or form during the integration phase.  Typically, some actions rans as `gi
+CI pipeline should follow the [Verification and Validation](https://en.wikipedia.org/wiki/Verification_and_validation) (also known as V&V) quality assurance processes.  This implies that all verification made using `pre-commit` hook should be ran in some shape or form during the integration phase.  It can be convenient to **re-run** the [pre-commit frameworks](#tools1) as the first integration steps using the repository configuration.  This will ensure that if some project members have committed code that does not meet the expect code quality or security, a **failed-fast** will occurs quikcly capturing the issue.  Such failure should prevent any further activities part of the code integration process and prevent the project member contribution to be halted until correction are made.
 
-of the more advanced tool like secret scanner, sast, sca and others will have dedicated pre-configuration jobs|workflows
+This is also an ideal means to catch disgruntled team members that are not following the agreed coding convention.  A common reaction should be to put on hiatus any code review by peer until the `pre-commit` hook run pass successfully showcasing it meet the expected quality and security.
 
-Pre-commit should be kept as an elec
+Finally some `pre-commit` hook might be disabled from this initial **re-run** check in favor of a further **full-fat** scanner integration.  Given `pre-commit` hook are kept lightweight for ease of usage they might not perform all check and validation that a dedicated tool such as secret scanner, sast, sca and others might do.  Also these dedicate tools might performs more in depth valiation that goes beyond what the [pre-commit frameworks](#tools1) allows to achieve.
+
+In the end, parity between `pre-commit` hook and CI pipeline can not always be achieve but it is ideal to converge as closely as possible to reduce churn.
 
 ## Considerations
 

@@ -73,8 +73,8 @@ The `pre-commit` hooks is trigger between the `git add` and `git commit` operati
 
 Typical `pre-commit` hooks will validate for:
 
-- [Secret Scanning](../2-2-1-Pre-commit/2-2-1-2-Secrets-Management.md): Most likely the most useful security related hooks.
-- [Linting](../2-2-1-Pre-commit/2-2-1-3-Linting-code.md): Most likely the most common usage for `pre-commit` hooks.
+- [Secret Scanning](../2-2-2-Secret-Scanning/2-2-2-1-Secret-Scanning.md): Most likely the most useful security related hooks.
+- [Linting](../2-2-1-Pre-Commit/2-2-1-3-Linting-code.md): Most likely the most common usage for `pre-commit` hooks.
 - Format: Standardize common format based on define rulesets.
 - Security tools: Several security tools can be run locally capturing issue earlier.
 - Misconfiguration: Common misconfiguration can be catch and avoid developpers annoyances.

@@ -1,6 +1,6 @@
-# Take care secrets and credentials
+# Secret Scanning
 
-*How can you ensure that sensitive information are not pushed to a repository?*
+> How can you ensure that sensitive information are not pushed to a repository?
 
 This is one of the [OWASP Top Ten issues](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure) and
 several bug bounties write-ups are related to this kind of issue, eg hard-coded credentials pushed by mistake.
